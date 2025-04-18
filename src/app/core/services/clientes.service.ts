@@ -21,7 +21,10 @@ export class ClientesService {
     );
   }
 
-  getItemById(id: string) {
-    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.headers });
+  crearCliente(cliente: any) {
+  
+    return this.http.post(this.apiUrl, cliente, 
+      { headers: this.headers }
+  );
   }
 }

@@ -34,6 +34,12 @@ throw new Error('Method not implemented.');
   totalPaginas = 1;
   rowsPaginados: any[] = [];
 
+  //Variables para POST
+  mostrarModal = false;
+  nuevoCliente = { nombre: '', fecha_nacimiento: '', email: '', telefono: 0 };
+  nuevoProducto = { nombre: '', precio: 0, descripcion: '' };
+  nuevoPedido = { num_pedido: 0, importe: 0, cantidad_productos: 0, fecha: '', nombre_cliente: '' };
+
 
   constructor(private clientesService: ClientesService, private productosService: ProductosService, private pedidosService: PedidosService){}
 
@@ -190,5 +196,68 @@ throw new Error('Method not implemented.');
       this.paginaActual++;
       this.actualizarPaginado();
     }
+  }
+
+  //Metodos para POST
+
+  abrirModal() {
+    this.mostrarModal = true;
+  }
+  
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.nuevoCliente = {
+      nombre: '',
+      fecha_nacimiento: '',
+      email: '',
+      telefono: 0
+    };
+  }
+
+  crearEntidad() {
+    if (this.tituloTabla === 'Clientes') {
+      this.clientesService.crearCliente(this.nuevoCliente).subscribe({
+        next: (response) => {
+          this.cerrarModal();
+          this.getAllClientes();
+        },
+        error: (err) => console.error('Error creando cliente', err)
+      });
+    } else if (this.tituloTabla === 'Productos') {
+      this.productosService.crearProducto(this.nuevoProducto).subscribe({
+        next: (response) => {
+          this.cerrarModal();
+          this.getAllProductos();
+        },
+        error: (err) => console.error('Error creando producto', err)
+      });
+    } else if (this.tituloTabla === 'Pedidos') {
+      this.pedidosService.crearPedido(this.nuevoPedido).subscribe({
+        next: (response) => {
+          this.cerrarModal();
+          this.getAllPedidos();
+        },
+        error: (err) => console.error('Error creando pedido', err)
+      });
+    }
+  }
+
+  formularioValido(): boolean {
+    if (this.tituloTabla === 'Clientes') {
+      const { nombre, fecha_nacimiento, email, telefono } = this.nuevoCliente;
+      return !!(nombre && fecha_nacimiento && email && telefono);
+    }
+  
+    if (this.tituloTabla === 'Productos') {
+      const { nombre, precio, descripcion } = this.nuevoProducto;
+      return !!(nombre && precio && descripcion);
+    }
+  
+    if (this.tituloTabla === 'Pedidos') {
+      const { num_pedido, importe, cantidad_productos, fecha, nombre_cliente } = this.nuevoPedido;
+      return !!(num_pedido && importe && cantidad_productos && fecha && nombre_cliente);
+    }
+  
+    return false;
   }
 }

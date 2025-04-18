@@ -20,4 +20,11 @@ export class PedidosService {
       { headers: this.headers }
     );
   }
+
+  crearPedido(pedido: any) {
+  
+    return this.http.post(this.apiUrl, pedido, 
+      { headers: this.headers }
+  );
+  }
 }

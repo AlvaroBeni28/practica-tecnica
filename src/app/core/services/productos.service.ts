@@ -21,5 +21,12 @@ export class ProductosService {
     );
   }
 
+  crearProducto(producto: any) {
+  
+    return this.http.post(this.apiUrl, producto, 
+      { headers: this.headers }
+  );
+  }
+
 
 }

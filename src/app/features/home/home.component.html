@@ -51,6 +51,11 @@
 
           <div class="text-center">
             Página {{ paginaActual }} de {{ totalPaginas }}
+
+            <div class="d-flex justify-content-end mt-2">
+                <button class="btn btn-primary" (click)="abrirModal()">
+                    Añadir {{ tituloTabla.slice(0, -1) }} <!-- Cliente, Producto, Pedido -->
+                  </button>              </div>
           </div>
       
           <button 
@@ -62,4 +67,89 @@
         </div>
   
   </div>
+
 </div>
+
+<!-- Modal -->
+<div class="modal fade show" tabindex="-1" role="dialog" [ngClass]="{ 'd-block': mostrarModal }" style="background: rgba(0,0,0,0.5);" *ngIf="mostrarModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-4">
+  
+        <div class="modal-header">
+          <h5 class="modal-title">Nuevo {{ tituloTabla.slice(0, -1) }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
+        </div>
+  
+        <div class="modal-body">
+  
+          <!-- Formulario para Clientes -->
+          <div *ngIf="tituloTabla === 'Clientes'">
+            <div class="mb-3">
+              <label>Nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoCliente.nombre">
+            </div>
+            <div class="mb-3">
+              <label>Fecha de nacimiento</label>
+              <input type="date" class="form-control" [(ngModel)]="nuevoCliente.fecha_nacimiento">
+            </div>
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" [(ngModel)]="nuevoCliente.email">
+            </div>
+            <div class="mb-3">
+              <label>Teléfono</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevoCliente.telefono">
+            </div>
+          </div>
+  
+          <!-- Formulario para Productos -->
+          <div *ngIf="tituloTabla === 'Productos'">
+            <div class="mb-3">
+              <label>Nombre del producto</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoProducto.nombre">
+            </div>
+            <div class="mb-3">
+              <label>Precio</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevoProducto.precio">
+            </div>
+            <div class="mb-3">
+              <label>Descripción</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoProducto.descripcion">
+            </div>
+          </div>
+  
+          <!-- Formulario para Pedidos -->
+          <div *ngIf="tituloTabla === 'Pedidos'">
+            <div class="mb-3">
+              <label>Número de pedido</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevoPedido.num_pedido">
+            </div>
+            <div class="mb-3">
+              <label>Importe</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevoPedido.importe">
+            </div>
+            <div class="mb-3">
+              <label>Cantidad de productos</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevoPedido.cantidad_productos">
+            </div>
+            <div class="mb-3">
+              <label>Fecha</label>
+              <input type="date" class="form-control" [(ngModel)]="nuevoPedido.fecha">
+            </div>
+            <div class="mb-3">
+              <label>Nombre del cliente</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevoPedido.nombre_cliente">
+            </div>
+          </div>
+  
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="crearEntidad()" [disabled]="!formularioValido()">Guardar</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
