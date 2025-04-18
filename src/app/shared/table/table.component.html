@@ -1,0 +1,13 @@
+<table class="table" [ngClass]="tableClasses">
+    <thead>
+      <tr>
+        <th *ngFor="let h of headers">{{ headersTexto[h] || h }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let key of headers">{{ row[key] }}</td> <!-- 👈 recorre headers, no keys -->
+      </tr>
+    </tbody>
+  </table>
+  

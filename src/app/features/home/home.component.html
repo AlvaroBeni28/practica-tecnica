@@ -1,0 +1,65 @@
+<div class="bg-light min-vh-100 py-4">
+
+<div class="container mt-4">
+
+    <!-- Navbar de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded shadow-sm mb-4">
+      <div class="container-fluid justify-content-center">
+        <div class="navbar-nav">
+          <button class="btn mx-2" [ngClass]="tituloTabla === 'Clientes' ? 'btn-primary' : 'btn-outline-primary'" (click)="getAllClientes()">Clientes</button>
+          <button class="btn mx-2"  [ngClass]="tituloTabla === 'Productos' ? 'btn-primary' : 'btn-outline-primary'"(click)="getAllProductos()">Productos</button>
+          <button class="btn mx-2"  [ngClass]="tituloTabla === 'Pedidos' ? 'btn-primary' : 'btn-outline-primary'"(click)="getAllPedidos()">Pedidos</button>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Título y Buscador -->
+    <div class="row justify-content-center mb-3">
+      <div class="col-md-10 text-center">
+        <h2 class="mb-3">{{ tituloTabla }}</h2>
+  
+        <input 
+          type="text"
+          class="form-control mb-4"
+          placeholder="Buscar por nombre..."
+          [(ngModel)]="busquedaNombre"
+          (input)="filtrarPorNombre()"
+        />
+      </div>
+    </div>
+  
+    <!-- Tabla -->
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <app-table 
+          [headers]="headers" 
+          [headersTexto]="headersTexto" 
+          [rows]="rowsPaginados"
+          [tableClasses]="'table-striped table-bordered text-center'">
+        </app-table>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-10 d-flex justify-content-between">
+          <button 
+            class="btn btn-primary" 
+            [disabled]="paginaActual === 1"
+            (click)="paginaAnterior()">
+            Anterior
+          </button>
+
+          <div class="text-center">
+            Página {{ paginaActual }} de {{ totalPaginas }}
+          </div>
+      
+          <button 
+            class="btn btn btn-primary" 
+            [disabled]="paginaActual === totalPaginas"
+            (click)="paginaSiguiente()">
+            Siguiente
+          </button>
+        </div>
+  
+  </div>
+</div>
